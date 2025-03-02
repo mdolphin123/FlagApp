@@ -54,7 +54,7 @@ void setup() {
   server.begin();
 }
 
-void reconnectMQTT() {
+void reconnectMQTT() { 
   while (!mqttClient.connected()) {
     Serial.print("Connecting to MQTT...");
     if (mqttClient.connect("Central_Controller")) {
@@ -69,13 +69,13 @@ void reconnectMQTT() {
   }
 }
 
-void mqttCallback(char* topic, byte* payload, unsigned int length) {
-  String message;
+void mqttCallback(char* topic, byte* payload, unsigned int length) { //ESP32 receives commands through callback function
+  String message; //send a message
   for (unsigned int i = 0; i < length; i++) {
     message += (char)payload[i];
   }
 
-  if (String(topic) == flag1_status) flag1State = message;
+  if (String(topic) == flag1_status) flag1State = message; 
   if (String(topic) == flag2_status) flag2State = message;
   if (String(topic) == flag3_status) flag3State = message;
 
@@ -115,7 +115,7 @@ void handleRoot() {
 
 
 
-void handleControl() {
+void handleControl() { //implement external requests here 
   if (server.hasArg("action")) {
     String action = server.arg("action");  // Extract action (raise/lower)
 
@@ -128,7 +128,7 @@ void handleControl() {
           
           // Construct MQTT topic dynamically
           String topic = String("flagController/") + flag + "/control";  
-          mqttClient.publish(topic.c_str(), action.c_str());
+          mqttClient.publish(topic.c_str(), action.c_str()); //publish topic sends messages, topic is the flag number
         }
       }
     }
