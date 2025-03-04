@@ -219,10 +219,11 @@ void init(String action1)
      }
     
     
- 
 }
+
+//*how is this different from the init method
+
 void handlePostRequest(String action) {
-  
  if (action == "raise") {
    instance = "raise";
      elapsedTime = 0;
