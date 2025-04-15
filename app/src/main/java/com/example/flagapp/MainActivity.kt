@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                 val i = Intent(this@MainActivity, sign_in::class.java)
                 startActivity(i)
             }, 500)
-
         }
 
         val button2 = findViewById<View>(R.id.button1)
@@ -48,9 +47,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(i)
             }, 500)
         }
-
-
-
 
 
 

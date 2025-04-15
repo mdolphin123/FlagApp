@@ -3,6 +3,7 @@ package com.example.flagapp
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -39,7 +40,16 @@ class mainpage : AppCompatActivity() {
             add(ItemsViewModel(false, "Football Stadium", "Ground", View.generateViewId()))
             add(ItemsViewModel(false, "Location 4", "Ground", View.generateViewId()))
         }
-        val adapter = CustomAdapter(data)
+
+        //multiple different IP addresses to represent the MQTT, actually will be using
+        //one IP address but likely different part, this is just for placeholding
+        val IPS = ArrayList<String>();
+        IPS.add("1");
+        IPS.add("2");
+        IPS.add("3");
+        IPS.add("4");
+
+        val adapter = CustomAdapter(data, IPS, applicationContext)
         recyclerview.adapter = adapter
 
         val button = findViewById<View>(R.id.button4)
@@ -73,19 +83,40 @@ class mainpage : AppCompatActivity() {
         upbutton.setOnClickListener {
             if (upbutton.isChecked()) {
                 downbutton.setChecked(false)
-                AndroidNetworking.get("http://172.20.10.11/get?data=CW")
+                AndroidNetworking.get("http://172.20.10.11/get?data=UP")
                     .build()
                     .getAsString(object : StringRequestListener {
                         override fun onResponse(response: String) {
-                            Toast.makeText(applicationContext, "Done: "+ response.replace("\n", "") + "!", Toast.LENGTH_LONG).show()
+                            val number: Int = response.toInt();
+                            val delay = Handler()
+                            delay.postDelayed({
+                                if (number < 0) {
+                                    adapter.updateItem(data, 0, "flag stuck")
+                                 }
+                                else if (number < 95) {
+                                    adapter.updateItem(data, 0, "%" + number + "raised")
+                                } else {
+                                    adapter.updateItem(data, 0, "full height");
+                                }
+                            }, 2500)
+
+                            Toast.makeText(
+                                applicationContext,
+                                "Done: " + response.replace("\n", "") + "!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
 
                         override fun onError(anError: ANError) {
-                            Toast.makeText(applicationContext, anError.errorBody, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                applicationContext,
+                                anError.errorBody,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     })
 
-                val delay = Handler()
+                /* val delay = Handler()
                 for(i in 0..3)
                     adapter.updateItem(data, i, "loading")
                 delay.postDelayed({
@@ -107,23 +138,46 @@ class mainpage : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Done!", Toast.LENGTH_LONG).show()
                 }, 2500)
 
+                 */
+
             }
         }
 
         downbutton.setOnClickListener {
-            if(downbutton.isChecked()) {
+            if (downbutton.isChecked()) {
                 upbutton.setChecked(false)
-                AndroidNetworking.get("http://172.20.10.11/get?data=CCW")
+                AndroidNetworking.get("http://172.20.10.11/get?data=DOWN")
                     .build()
                     .getAsString(object : StringRequestListener {
                         override fun onResponse(response: String) {
-                            Toast.makeText(applicationContext, "Done: " + response.replace("\n", "") + "!", Toast.LENGTH_LONG).show()
+                            val number: Int = response.toInt();
+                            val delay = Handler()
+                            delay.postDelayed({
+                                if (number < 0) {
+                                    adapter.updateItem(data, 0, "flag stuck")
+                                }
+                                else if (number < 95) {
+                                    adapter.updateItem(data, 0, "%" + number + "raised")
+                                } else {
+                                    adapter.updateItem(data, 0, "full height");
+                                }
+                            }, 2500)
+                            Toast.makeText(
+                                applicationContext,
+                                "Done: " + response.replace("\n", "") + "!",
+                                Toast.LENGTH_LONG
+                            ).show()
                         }
 
                         override fun onError(anError: ANError) {
-                            Toast.makeText(applicationContext, anError.errorBody, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                applicationContext,
+                                anError.errorBody,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     })
+                /*
                 for(i in 0..3)
                     adapter.updateItem(data, i, "loading")
                 val delay = Handler()
@@ -145,6 +199,8 @@ class mainpage : AppCompatActivity() {
                         adapter.updateItem2(data, i, false)
                     Toast.makeText(applicationContext, "Done!", Toast.LENGTH_LONG).show()
                 }, 2500)
+
+                 */
             }
 
         }
