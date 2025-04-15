@@ -97,7 +97,7 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val IPs: Li
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val checkbox: CheckBox = itemView.findViewById(androidx.appcompat.R.id.checkbox)
+        val checkbox: CheckBox = itemView.findViewById(R.id.checkbox)
         val textView: TextView = itemView.findViewById(R.id.textView8)
     }
 
