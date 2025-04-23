@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    //alias(libs.plugins.kotlin.android.extensions)
 }
+
 
 android {
     namespace = "com.example.flagapp"
@@ -36,7 +38,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
+
+
 
 dependencies {
     implementation(libs.android.volley)
@@ -54,4 +59,10 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("com.amplifyframework:core:1.4.0")
+    implementation("com.amplifyframework:aws-auth-cognito:1.4.0")
+
+
+    implementation(libs.core)
 }

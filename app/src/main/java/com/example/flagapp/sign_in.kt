@@ -10,6 +10,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.lifecycle.Observer
+import android.util.Log
+import com.amazonaws.mobile.client.internal.oauth2.OAuth2Client.TAG
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 //import com.example.flagapp.databinding.ActivitySignInBinding
 
@@ -20,8 +24,12 @@ class sign_in : AppCompatActivity() {
     private lateinit var binding: sign_in
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.sign_in)
+
+
 
         val extras = intent.extras
         var username = ""
@@ -34,9 +42,9 @@ class sign_in : AppCompatActivity() {
         }
 
         val button4 = findViewById<View>(R.id.button) as Button
+
         button4.setOnClickListener {
             val handler3 = Handler()
-
 
             button4.setBackgroundDrawable(getResources().getDrawable(R.drawable.roundcornerborder1))
             handler3.postDelayed({
@@ -59,5 +67,7 @@ class sign_in : AppCompatActivity() {
                 }
             }, 500)
         }
+
+
     }
 }
