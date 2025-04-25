@@ -47,11 +47,15 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val IPs: Li
                 //Also a placeholder, make sure you insert the FULL function!!!!
                 val handler3 = Handler()
 
-                AndroidNetworking.get("172.28.223.231/get?data=raise&" + "flag=" + IPs[position])
+                AndroidNetworking.get("http://172.28.7.218/control?action=raise&" + "flag=" + IPs[position])
                     .build()
                     .getAsString(object : StringRequestListener {
                         override fun onResponse(response: String) {
-                            val number: Int = response.toInt();
+                            val delay = Handler()
+                            delay.postDelayed({
+
+                            }, 2500)
+
                             Toast.makeText(
                                 applicationContext,
                                 "Done: " + response.replace("\n", "") + "!",
@@ -67,26 +71,44 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, private val IPs: Li
                             ).show()
                         }
                     })
-
                 handler3.postDelayed({
                     updateItem(mList, position, "full mast");
                     updateItem2(mList, position, true);
                 }, 1000);
 
-
-
             }
             else {
                 val handler3 = Handler()
-                AndroidNetworking.get(IPs[position] + "/get?data=DOWN");
+                AndroidNetworking.get("http://172.28.7.218/control?action=lower&" + "flag=" + IPs[position])
+                    .build()
+                    .getAsString(object : StringRequestListener {
+                        override fun onResponse(response: String) {
+                            val delay = Handler()
+                            delay.postDelayed({
+
+                            }, 2500)
+
+                            Toast.makeText(
+                                applicationContext,
+                                "Done: " + response.replace("\n", "") + "!",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                        override fun onError(anError: ANError) {
+                            Toast.makeText(
+                                applicationContext,
+                                anError.errorBody,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
                 handler3.postDelayed({
-                    updateItem(mList, position, "ground");
+                    updateItem(mList, position, "half mast");
                     updateItem2(mList, position, false);
                 },1000)
             }
         }
-
-
     }
 
     // return the number of the items in the list

@@ -87,7 +87,7 @@ object Backend {
     }
 
     private fun updateUserData(withSignedInStatus : Boolean) {
-        //UserData.setSignedIn(withSignedInStatus)
+        UserData.setSignedIn(withSignedInStatus)
     }
 
     fun signOut() {
