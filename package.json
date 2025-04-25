@@ -1,0 +1,34 @@
+{
+  "name": "flagapp",
+  "version": "1.0.0",
+  "description": "This app utilizes GET requests sent through android studio code to an online webserver created by an ESP32 microcontroller through Arduino IDE. The webserver receives the requests, and the ESP32 helps turn a motor connected to the flag to raise or lower the flag. Future plans for this project include improving security and logins, incorporating frameworks to make the UI more aesthetic, adding connections to different flags around campus, and hopefully eventually autonomating the raising of flags at Duke University.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdolphin123/Flag_App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/mdolphin123/Flag_App/issues"
+  },
+  "homepage": "https://github.com/mdolphin123/Flag_App#readme",
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.14.3",
+    "@aws-amplify/backend-cli": "^1.5.0",
+    "aws-cdk": "^2.1003.0",
+    "aws-cdk-lib": "^2.180.0",
+    "constructs": "^10.4.2",
+    "esbuild": "^0.25.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "aws-amplify": "^6.14.2"
+  }
+}
